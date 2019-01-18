@@ -2,7 +2,8 @@
 
 INSTANCE="${BLOCK_INSTANCE:-1}"
 
-URGENT_VALUE=90
+# assume four CPU at 90%
+URGENT_VALUE=360
 
 LOAD=$(cat /proc/loadavg | awk -F ' ' '{print $'"${INSTANCE}"'}')
 if [[ "${LOAD}" != "" ]]; then

@@ -21,7 +21,7 @@ ONE_MB=$(echo "${ONE_KB}*1024" | bc -l)
 TEN_MB=$(echo "${ONE_MB}*10" | bc -l)
 OHD_MB=$(echo "${TEN_MB}*10" | bc -l)
 
-URGENT_VALUE="${ONE_MB}"
+URGENT_VALUE="${OHD_MB}"
 
 PREV_IN=0
 PREV_OUT=0
@@ -66,22 +66,26 @@ if [[ "${PREV_IN}" != "" ]] && [[ "${PREV_OUT}" != "" ]]; then
   USAGE_IN=$(FormatNumber "${DIFF_IN}")
   USAGE_OUT=$(FormatNumber "${DIFF_OUT}")
 
-  if [[ "${DISPLAY}" = "both" ]]; then
+  if [[ "${USAGE_IN}" != "0b"  && "${USAGE_OUT}" != "0b" ]]; then
     echo "${USAGE_IN} : ${USAGE_OUT}"
     echo "${USAGE_IN} : ${USAGE_OUT}"
     echo ""
     DIFF_TOTAL=$((DIFF_TOTAL+DIFF_IN))
     DIFF_TOTAL=$((DIFF_TOTAL+DIFF_OUT))
-  elif [[ "${DISPLAY}" = "in" ]]; then
+  elif [[ "${USAGE_IN}" != "0b" ]]; then
     echo "${USAGE_IN}"
     echo "${USAGE_IN}"
     echo ""
     DIFF_TOTAL=$((DIFF_TOTAL+DIFF_IN))
-  elif [[ "${DISPLAY}" = "out" ]]; then
-    echo "${USAGE_OUT}"
-    echo "${USAGE_OUT}"
+  elif [[ "${USAGE_OUT}" != "0b" ]]; then
+    echo ": ${USAGE_OUT}"
+    echo ": ${USAGE_OUT}"
     echo ""
     DIFF_TOTAL=$((DIFF_TOTAL+DIFF_OUT))
+  else
+     echo " "
+     echo " "
+     echo ""
   fi
 else
   echo "?"

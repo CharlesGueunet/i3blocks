@@ -1,5 +1,11 @@
 #!/usr/bin/bash
 
+CHECKCMD=$(command -v checkupdates | wc -l)
+
+if [[ $CHECKCMD == 0 ]]; then
+  exit 0
+fi
+
 URGENT_VALUE=25
 PACKAGE_COUNT=$(checkupdates | wc -l)
 
